@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity  } from 'react-native';
-// import '../assets/css/Login.css';
+import NavBar from './NavBar.js';
 function Login() {
     return (
         <View style={styles.login}>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     login__register: {
-        marginTop: 200,
+        marginTop: 10,
         marginBottom: 0,
     }
 })
