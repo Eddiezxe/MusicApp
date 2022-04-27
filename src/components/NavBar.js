@@ -1,21 +1,34 @@
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity  } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'; 
-export default function NavBar() {
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+
+function Login() {
+  return (
+    <View>
+      <Text>Login</Text>
+    </View>
+  )
+}
+function Search() {
     return (
-        <View style={styles.navBar}>
-            <TouchableOpacity style={[styles.navBar__button]}>
-                <Icon name="home" size={30} color="#fff" />
-                <Text style={styles.navBar__btnText}>Home</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.navBar__button]}>
-                <Icon name="search" size={30} color="#fff" />
-                <Text style={styles.navBar__btnText}>Search</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.navBar__button]}>
-                <Icon name="library" size={30} color="#fff" />
-                <Text style={styles.navBar__btnText}>Library</Text>
-            </TouchableOpacity>
-        </View>
+      <View>
+        <Text>Search</Text>
+      </View>
+    )
+  }
+
+
+const Stack = createNativeStackNavigator();
+function NavBar() {
+    return (
+        <NavigationContainer>
+            <Stack.Navigator style={[styles.navBar]} initialRouteName="Login">
+                <Stack.Screen style={styles.navBar__button} name="Login" component={Login} />
+                <Stack.Screen style={styles.navBar__button} name="Search" component={Search} />
+            </Stack.Navigator>
+    </NavigationContainer>
     )
 }
 const styles = StyleSheet.create({
@@ -44,3 +57,4 @@ const styles = StyleSheet.create({
         fontSize: 16,
     }
 })
+export default NavBar;

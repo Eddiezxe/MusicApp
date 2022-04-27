@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity  } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign'; 
 import NavBar from './NavBar.js';
-function Search() {
+const Search = () => {
     return (
         <View style={styles.search}>
             <View style={[styles.search__searchSection]}>
@@ -24,7 +24,6 @@ function Search() {
     )
 }
 
-export default Search
 const styles = StyleSheet.create({
     white:{
         color: "white",
@@ -61,3 +60,4 @@ const styles = StyleSheet.create({
         marginTop: 50,
     }
 })
+export default Search

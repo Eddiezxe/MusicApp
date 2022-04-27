@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity  } from 'react-native';
-import NavBar from './NavBar.js';
 function Login() {
     return (
         <View style={styles.login}>
