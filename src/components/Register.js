@@ -1,15 +1,75 @@
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity  } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; 
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, KeyboardAvoidingView, Alert  } from 'react-native';
+import { initializeApp } from "firebase/app";
+import 'firebase/auth';
+import Constants from 'expo-constants';
+import {app} from 'firebase/app';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+
+const auth = getAuth();
+app.initializeApp()
 export default function NavBar() {
+    const [userInfo, setUserInfo] = useState({
+        email: '',
+        password: '',
+        error: '',
+    })
+
+
+    async function signUp(){
+        if(userInfo.email === '' || userInfo.password === '')
+        {
+            setUserInfo({
+                ...userInfo,
+                error: "Please enter your email address and password"
+            })
+            return;
+        }
+        try {
+            await createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password)
+        }
+        catch(error) {
+            setUserInfo({
+            ...userInfo,
+            error: error.message,
+        })
+        }
+    }
+    
+    
     return (
-        <View style={styles.register}>
-            <TextInput style={[styles.register__input, styles.mt10]} placeholderTextColor={'#555'}  placeholder="Username"/>
-            <TextInput style={[styles.register__input, styles.mt10]} placeholderTextColor={'#555'}  placeholder="Password" secureTextEntry/>
-            <TextInput style={[styles.register__input, styles.mt10]} placeholderTextColor={'#555'}  placeholder="Verify your password" secureTextEntry/>
-            <TouchableOpacity style={[styles.register__btnRegister ,styles.mt10]}>
-                <Text style={styles.register__btnRegisterText}>Sign up</Text>
-            </TouchableOpacity>
-        </View>
+        <KeyboardAvoidingView
+            behavior='padding'
+            style={styles.register__container}>
+            <View style={styles.register}>
+                <Text style={styles.register__title}>Register your account</Text>
+                <TextInput 
+                    onChangeText={(newEmail) => setUserInfo({...userInfo, email: newEmail})} 
+                    value={userInfo.email}
+                    style={[styles.register__input]} 
+                    placeholderTextColor={'#555'} 
+                    placeholder="Your email here"/>
+                <TextInput 
+                    onChangeText={(newPassword) => setUserInfo({...userInfo, password: newPassword})} 
+                    value={userInfo.password}
+                    style={[styles.register__input]} 
+                    placeholderTextColor={'#555'}
+                    placeholder="Password" 
+                    />
+                {/* <TextInput 
+                    onChangeText={ newVerifyPassword => setVerifyPassword(newVerifyPassword)} 
+                    style={[styles.register__input]} 
+                    placeholderTextColor={'#555'}
+                    value={verifyPassword}
+                    placeholder="Verify your password" 
+                    secureTextEntry/> */}
+                <TouchableOpacity onPress={signUp} style={[styles.register__btnRegister]}>
+                    <Text style={styles.register__btnRegisterText}>Sign up</Text>
+                </TouchableOpacity>
+            </View>
+        </KeyboardAvoidingView>
+                
+        
     )
 }
 
@@ -20,6 +80,12 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         justifyContent: "center"
+    },
+    register__title:{
+        color: "#fff",
+        fontSize: 28,
+        marginBottom: 36,
+
     },
     register__input: {
         width: "90%",
