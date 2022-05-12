@@ -8,6 +8,8 @@ import Search from './src/components/Search.js'
 import NavBar from './src/components/NavBar.js';
 import Register from './src/components/Register.js'
 import Home from './src/components/Home.js';
+import HorizontalLists from './src/components/HorizontalLists.js'
+import ListItem from './src/components/ListItem.js'
 
 
 const Stack = createNativeStackNavigator();
