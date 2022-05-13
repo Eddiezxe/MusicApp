@@ -10,8 +10,10 @@ const PlayList = (props: PlayListProps) => {
     return( 
     <View style={styles.container}>
         <Image style={styles.image} source={{uri:props.playList.imageURL}}/>
-        <Text style={styles.header}>{props.playList.name}</Text>
-        <Text style={styles.text}>By {props.playList.author}</Text>
+        <View style={styles.PlayList__texts}>
+            <Text style={styles.header}>{props.playList.name}</Text>
+            <Text style={styles.text}>By {props.playList.author}</Text>
+        </View>
     </View>);
    
 }

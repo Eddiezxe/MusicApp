@@ -2,10 +2,6 @@ import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity  } from 're
 import Icon from 'react-native-vector-icons/Ionicons'; 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './Home.js';
-import Login from './Login.js';
-import Register from './Register.js';
-import Search from './Search.js';
 
 
 function NavBar({ navigation }) {
@@ -17,8 +13,8 @@ function NavBar({ navigation }) {
             <TouchableOpacity style={[styles.navBar__button]} onPress={() => navigation.navigate('Search')}>
                 <Text style={[styles.navBar__btnText]}>Search</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.navBar__button]} onPress={() => navigation.navigate('Register')}>
-                <Text style={[styles.navBar__btnText]}>Register</Text>
+            <TouchableOpacity style={[styles.navBar__button]} onPress={() => navigation.navigate('Playlist')}>
+                <Text style={[styles.navBar__btnText]}>Playlist</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.navBar__button]} onPress={() => navigation.navigate('Login')}>
                 <Text style={[styles.navBar__btnText]}>Login</Text>
@@ -37,9 +33,7 @@ const styles = StyleSheet.create({
         right: 0,
         left: 0,
         paddingBottom: 20,
-        backgroundColor: "#101010",     
-
-        
+        backgroundColor: "#101010",         
     },
     navBar__button: {
         padding: 18,

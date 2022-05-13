@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { StyleSheet,Text, View, FlatList } from 'react-native';
+import { StyleSheet,Text, View, FlatList, SafeAreaView } from 'react-native';
 import PlayList from './PlayList';
 import {playList} from '../../types';
+import NavBar from './NavBar.js';
 
-const playListArr: playList[] = [{
+const playListArr: playList[] = [
+  {
     id: '1',
     imageURL: 'https://i1.sndcdn.com/avatars-000500544273-6kcyh0-t500x500.jpg',
     name: 'Milk-tea',
@@ -21,16 +23,42 @@ const playListArr: playList[] = [{
     imageURL: 'https://c4.wallpaperflare.com/wallpaper/81/477/97/rihana-singer-wallpaper-preview.jpg',
     name: 'Sunshine',
     author: 'Wester'
-  }];
-
-export default function PlayListScreen() {
+  },
+  {
+    id: '3',
+    imageURL: 'https://c4.wallpaperflare.com/wallpaper/81/477/97/rihana-singer-wallpaper-preview.jpg',
+    name: 'Sunshine',
+    author: 'Wester'
+  },
+  {
+    id: '3',
+    imageURL: 'https://c4.wallpaperflare.com/wallpaper/81/477/97/rihana-singer-wallpaper-preview.jpg',
+    name: 'Sunshine',
+    author: 'Wester'
+  },
+  {
+    id: '3',
+    imageURL: 'https://c4.wallpaperflare.com/wallpaper/81/477/97/rihana-singer-wallpaper-preview.jpg',
+    name: 'Sunshine',
+    author: 'Wester'
+  }
+];
+const renderItem = ({item}) => {
+  return (
+    <PlayList playList = {item}/>
+  )
+}
+export default function PlayListScreen({navigation}) {
   return (
     <View style={styles.container}>
-      <FlatList data={playListArr}
-       renderItem ={({item}) => <PlayList playList = {item}/>}
-       keyExtractor= {(item)=> item.id}
-       horizontal = {true}
-       />
+      <SafeAreaView style={{ flex: 1 }}>
+          <FlatList data={playListArr}
+          renderItem ={renderItem}
+          keyExtractor= {(item)=> item.id}
+          showsVerticalScrollIndicator={false}
+          />
+      </SafeAreaView>
+      <NavBar navigation={navigation}/>
     </View>
   );
 }
@@ -42,7 +70,7 @@ const styles = StyleSheet.create({
     // height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'black'
+    backgroundColor: '#101010'
   },
   title: {
     fontSize: 20,
