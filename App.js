@@ -16,16 +16,16 @@ import ListItem from './src/components/ListItem.js'
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
-    <PlayListScreen/>
-    // <NavigationContainer>
-    //         <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
-    //             <Stack.Screen name="Login" component={Login} />
-    //             <Stack.Screen name="Home" component={Home} />
-    //             <Stack.Screen name="Search" component={Search} />
-    //             <Stack.Screen name="Playlist" component={PlayListScreen} />
 
-    //         </Stack.Navigator>
-    // </NavigationContainer>
+    <NavigationContainer>
+            <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
+                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Home" component={Home} />
+                <Stack.Screen name="Search" component={Search} />
+                <Stack.Screen name="Playlist" component={PlayListScreen} />
+                <Stack.Screen name="Register" component={Register} />
+            </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

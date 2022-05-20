@@ -8,7 +8,7 @@ const ListItem = ({item}) => {
                     style={styles.image}
                     source={{uri: item.imageURL}}
                 />
-                <Text numberOfLines={2} style={styles.text}>{item.name}</Text>   
+                <Text numberOfLines={1} style={styles.text}>{item.name}</Text>   
         </View>
     )
 }

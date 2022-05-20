@@ -70,6 +70,10 @@ export default function NavBar() {
 }
 
 const styles = StyleSheet.create({
+    register__container:{
+        height: "100%",
+
+    },   
     register:{
         height: "100%",
         backgroundColor: "#101010",

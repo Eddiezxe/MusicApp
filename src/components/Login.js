@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity  } from 'react-native';
-function Login() {
+function Login({ navigation}) {
     return (
         <View style={styles.login}>
             <Text style={[styles.login__text]}>Login with your account</Text>
@@ -8,7 +8,7 @@ function Login() {
             <TouchableOpacity style={[styles.login__btn ,styles.login__signIn, styles.mt10]}>
                 <Text style={styles.login__text}>Login</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.login__btn, styles.login__register]}>
+            <TouchableOpacity style={[styles.login__btn, styles.login__register]} onPress={() => navigation.navigate('Register')}>
                 <Text style={[styles.login__text, styles.underline]}>Register</Text>
             </TouchableOpacity>
         </View>
