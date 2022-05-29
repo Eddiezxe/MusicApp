@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { StyleSheet,Text, View, FlatList, SafeAreaView } from 'react-native';
 import PlayList from './PlayList';
-import {playList} from '../../types';
 import NavBar from './NavBar.js';
 
-const playListArr: playList[] = [
+const playListArr = [
   {
     id: '1',
     imageURL: 'https://i1.sndcdn.com/avatars-000500544273-6kcyh0-t500x500.jpg',
@@ -43,11 +42,10 @@ const playListArr: playList[] = [
     author: 'Wester'
   }
 ];
-const renderItem = ({item}) => {
-  return (
-    <PlayList playList = {item}/>
-  )
-}
+const renderItem = function({item}){
+  return(<PlayList playList = {item}/>);
+} 
+
 export default function PlayListScreen({navigation}) {
   return (
     <View style={styles.container}>
