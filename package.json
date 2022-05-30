@@ -11,6 +11,7 @@
   "dependencies": {
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.2",
+    "@realm/react": "^0.3.0",
     "@types/react-native": "^0.67.6",
     "expo": "~44.0.2",
     "expo-dev-client": "~0.8.5",
