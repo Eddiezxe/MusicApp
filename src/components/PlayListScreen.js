@@ -8,7 +8,7 @@ const playListArr = [
     id: '1',
     imageURL: 'https://i1.sndcdn.com/avatars-000500544273-6kcyh0-t500x500.jpg',
     name: 'Milk-tea',
-    author: 'Dang Khuong'
+    author: 'Dang'
   }, 
   {
     id: '2',
@@ -24,34 +24,34 @@ const playListArr = [
     author: 'Wester'
   },
   {
-    id: '3',
+    id: '4',
     imageURL: 'https://c4.wallpaperflare.com/wallpaper/81/477/97/rihana-singer-wallpaper-preview.jpg',
     name: 'Sunshine',
     author: 'Wester'
   },
   {
-    id: '3',
+    id: '5',
     imageURL: 'https://c4.wallpaperflare.com/wallpaper/81/477/97/rihana-singer-wallpaper-preview.jpg',
     name: 'Sunshine',
     author: 'Wester'
   },
   {
-    id: '3',
+    id: '6',
     imageURL: 'https://c4.wallpaperflare.com/wallpaper/81/477/97/rihana-singer-wallpaper-preview.jpg',
     name: 'Sunshine',
     author: 'Wester'
   }
 ];
-const renderItem = function({item}){
-  return(<PlayList playList = {item}/>);
-} 
 
 export default function PlayListScreen({navigation}) {
+  const _renderItem = function({item}){
+    return(<PlayList playList = {item}/>);
+  }
   return (
     <View style={styles.container}>
       <SafeAreaView style={{ flex: 1 }}>
           <FlatList data={playListArr}
-          renderItem ={renderItem}
+          renderItem ={_renderItem}
           keyExtractor= {(item)=> item.id}
           showsVerticalScrollIndicator={false}
           />

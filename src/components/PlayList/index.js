@@ -31,13 +31,13 @@ const styles = StyleSheet.create({
 
         fontSize: 24,
         color: 'white',
-        marginTop: '10px',
+        marginTop: 30,
     },
 
     text: {
         fontSize: 18,
         color: '#777',
-        marginTop: '5px',
+        marginTop: 10,
 
 
     },
