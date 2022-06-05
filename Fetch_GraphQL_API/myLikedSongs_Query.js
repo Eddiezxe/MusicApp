@@ -1,22 +1,24 @@
 var axios = require('axios');
+// Can token de xem danh sach bai hat da thich
 var data = JSON.stringify({
-  query: `query TimBaiHatTheoChuDe($title: String!) {
-  searchSongByTitle(title: $title) {
+  query: `query BaiHatDaThichCuaToi{
+  myLikedSongs {
     id
-    title
     name
     author
     URI
     imageURL
+    title
   }
 }`,
-  variables: {"title":"Made for you"}
+  variables: {}
 });
 
 var config = {
   method: 'post',
   url: 'https://apollo-api-for-musicapp.herokuapp.com/',
   headers: { 
+    'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWI5ZmQ2ZTY3ZjExYTQxMTA4NDUwZSIsImlhdCI6MTY1NDQ0ODM4MywiZXhwIjoxNjU1NjU3OTgzfQ.QIs2Ua-Ff4hwYr3q1iMBN9bcp3iLnTepPWnycwLftQc', 
     'Content-Type': 'application/json'
   },
   data : data
