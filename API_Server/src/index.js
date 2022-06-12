@@ -340,8 +340,8 @@ const resolvers = {
     id: ({_id, id}) => {
       if(id) return id;
       objId = JSON.stringify(_id);
-      objId = objId.slice(1); //Remove quote at the beginning of string
-      objId = objId.slice(0, 24);//Remove quote at the end of string
+      objId = objId.slice(1);
+      objId = objId.slice(0, 24);
       return (objId);
     }
   },
@@ -350,57 +350,35 @@ const resolvers = {
     id: ({_id, id}) => {
       if(id) return id;
       objId = JSON.stringify(_id);
-      objId = objId.slice(1); //Remove quote at the beginning of string
-      objId = objId.slice(0, 24);//Remove quote at the end of string
+      objId = objId.slice(1); 
+      objId = objId.slice(0, 24);
       return (objId);
     }
   }
 
 };
 
-
-
-
-//Connect to MongoDB remote database (Mongo Atlas)
-
 start = async () => {
   try {
     const client = new MongoClient(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
     await client.connect();
     const db = client.db(DB_NAME);
-    // const collection = client.db(DB_NAME).collection("Collection_1");
-
-    //To access to the data in Mongo Atlas database and send it to
-    //resolver create. There are 2 ways: 1: Global variable
-    //2: Send db in the context and send context to ApolloServer by doing
-    // this way Appolo server will include context variable in every query
-    // and mutation
-
-
-    // The ApolloServer constructor requires two parameters: your schema
-    // definition and your set of resolvers.
     const server = new ApolloServer({ typeDefs, resolvers, 
       context: async ({req}) => {
       const user = await getUserFromToken(req.headers.authorization, db)
-      // console.log(user);
-      // console.log(req.headers.authorization);
       return {
         db,
         user
       }
     }});
-
-    // The `listen` method launches a web server.
     server.listen({ port: process.env.PORT || 5000 }).then(({ url }) => {
       console.log(`🚀  Server ready at ${url}`);
     });
-    // const res = await collection.findOne({"tuoi": 22});
-    // console.log(res);
     // client.close();
 }
-catch (err) {
+  catch (err) {
     console.log(err);
-}
+  }
 }
 
 start();
