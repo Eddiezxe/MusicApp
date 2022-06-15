@@ -1,15 +1,21 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 const ListItem = ({item}) => {
+    function handleSongPressed(){
+            
+    }
     return (
-        <View style={styles.imageContainer}>
+        <TouchableOpacity onPress={handleSongPressed}>
+            <View style={styles.imageContainer}>
                 <Image
                     style={styles.image}
                     source={{uri: item.imageURL}}
                 />
                 <Text numberOfLines={1} style={styles.text}>{item.name}</Text>   
-        </View>
+            </View>
+        </TouchableOpacity>
+        
     )
 }
 

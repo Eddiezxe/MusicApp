@@ -16,9 +16,6 @@ function NavBar({ navigation }) {
             <TouchableOpacity style={[styles.navBar__button]} onPress={() => navigation.navigate('Playlist')}>
                 <Text style={[styles.navBar__btnText]}>Playlist</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.navBar__button]} onPress={() => navigation.navigate('Login')}>
-                <Text style={[styles.navBar__btnText]}>Login</Text>
-            </TouchableOpacity>
         </View>
     )
 }

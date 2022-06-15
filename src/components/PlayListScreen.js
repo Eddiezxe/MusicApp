@@ -1,60 +1,69 @@
-import * as React from 'react';
 import { StyleSheet,Text, View, FlatList, SafeAreaView } from 'react-native';
 import PlayList from './PlayList';
 import NavBar from './NavBar.js';
+import React, {useEffect, useState} from 'react'
+import axios from 'axios';
+import PlaylistItem from './PlaylistItem.js';
 
-const playListArr = [
-  {
-    id: '1',
-    imageURL: 'https://i1.sndcdn.com/avatars-000500544273-6kcyh0-t500x500.jpg',
-    name: 'Milk-tea',
-    author: 'Dang Khuong'
-  }, 
-  {
-    id: '2',
-    imageURL: 'https://static.tuoitre.vn/tto/r/2017/06/29/eminem-014-1498724304.jpg',
-    name: 'Bubble-tea',
-    author: 'Someone'
-  },
 
-  {
-    id: '3',
-    imageURL: 'https://c4.wallpaperflare.com/wallpaper/81/477/97/rihana-singer-wallpaper-preview.jpg',
-    name: 'Sunshine',
-    author: 'Wester'
-  },
-  {
-    id: '3',
-    imageURL: 'https://c4.wallpaperflare.com/wallpaper/81/477/97/rihana-singer-wallpaper-preview.jpg',
-    name: 'Sunshine',
-    author: 'Wester'
-  },
-  {
-    id: '3',
-    imageURL: 'https://c4.wallpaperflare.com/wallpaper/81/477/97/rihana-singer-wallpaper-preview.jpg',
-    name: 'Sunshine',
-    author: 'Wester'
-  },
-  {
-    id: '3',
-    imageURL: 'https://c4.wallpaperflare.com/wallpaper/81/477/97/rihana-singer-wallpaper-preview.jpg',
-    name: 'Sunshine',
-    author: 'Wester'
-  }
-];
-const renderItem = function({item}){
-  return(<PlayList playList = {item}/>);
-} 
+ 
 
 export default function PlayListScreen({navigation}) {
+  const [json, setJson] = useState({});
+  // lay data sau khi mount component
+  useEffect(() => {
+    console.log('mounted');
+    var axios = require('axios');
+        var data = JSON.stringify({
+        query: `query PlayListCuaToi{
+        myPlayLists {
+            name
+            id
+            imageURL
+            description,
+            author {
+            name
+            }
+            songArr {
+              name
+              author
+              URI
+              imageURL
+              title
+            }
+        ,
+            
+        }
+        }`,
+        variables: {}
+        });
+        var config = {
+        method: 'post',
+        url: 'https://apollo-api-for-musicapp.herokuapp.com/',
+        headers: { 
+            'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTViNDIwYzM1YmM1ZjVhMTEwOWVkYiIsImlhdCI6MTY1NTAyNjcyMCwiZXhwIjoxNjU2MjM2MzIwfQ.eZdzzBDeumUo6kyEV91T5NThCJOKAWeCwhy_Qt8jjKo', 
+            'Content-Type': 'application/json'
+        },
+        data : data
+        };
+
+        async function handleData(){
+          let jsonGetFromServer = await axios(config);
+          console.log(jsonGetFromServer.data.data);
+          setJson(jsonGetFromServer.data.data);
+        }
+        handleData();
+}, [])
+const renderItem = function({item}){
+  return(<PlaylistItem item = {item}/>);
+}
   return (
     <View style={styles.container}>
       <SafeAreaView style={{ flex: 1 }}>
-          <FlatList data={playListArr}
+          <FlatList data={json.myPlayLists}
           renderItem ={renderItem}
           keyExtractor= {(item)=> item.id}
-          showsVerticalScrollIndicator={false}
-          />
+          showsVerticalScrollIndicator={false}/>      
       </SafeAreaView>
       <NavBar navigation={navigation}/>
     </View>

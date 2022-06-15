@@ -1,38 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, KeyboardAvoidingView, Alert  } from 'react-native';
-import 'firebase/auth'; 
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import axios from 'axios';
 
 
-export default function NavBar() {
-    const [userInfo, setUserInfo] = useState({
+
+
+
+export default function Register({navigation}) {
+    const [credentials, setCredentials] = useState({
         email: '',
         password: '',
-        error: '',
+        name: '',
+        verifyPassword: '',
+        error: ''
     })
 
-
-    async function signUp(){
-        if(userInfo.email === '' || userInfo.password === '')
-        {
-            setUserInfo({
-                ...userInfo,
-                error: "Please enter your email address and password"
-            })
-            return;
+    function handleSignUp(){
+        if(credentials.email && credentials.password && credentials.name && credentials.verifyPassword){// check if any field empty
+                if(credentials.password !== credentials.verifyPassword) // check if password and verify are the same
+                {
+                    setCredentials({...credentials, error: 'Password and verify password are not the same'})
+                }
+                else{ // if not then request to api to register
+                    var data = JSON.stringify({
+                        query: `mutation dangKyTaiKhoanMusicApp($email: String! $name: String! $password: String!){
+                        signUp(input: {
+                            email: $email
+                            name: $name
+                            password: $password
+                            }){
+                            token
+                            user {
+                                id
+                                name
+                            }
+                            }
+                        }`,
+                            variables: {"email":credentials.email,"name":credentials.name,"password": credentials.password}
+                        });
+                        
+                        var config = {
+                            method: 'post',
+                            url: 'https://apollo-api-for-musicapp.herokuapp.com/',
+                            headers: { 
+                            'Content-Type': 'application/json'
+                            },
+                            data : data
+                        };
+                        axios(config)
+                            .then(function (response) {
+                                // console.log(response);
+                                if(!response.data.errors)
+                                    console.log(response.data);
+                                else
+                                    setCredentials({...credentials, error: response.data.errors[0].message})
+                            })
+                }
         }
-        try {
-            await createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password)
+        else{
+            setCredentials({...credentials, error: 'All the field must be provided'})
         }
-        catch(error) {
-            setUserInfo({
-            ...userInfo,
-            error: error.message,
-        })
-        }
+        
     }
-    
-    
     return (
         <KeyboardAvoidingView
             behavior='padding'
@@ -40,27 +69,38 @@ export default function NavBar() {
             <View style={styles.register}>
                 <Text style={styles.register__title}>Register your account</Text>
                 <TextInput 
-                    onChangeText={(newEmail) => setUserInfo({...userInfo, email: newEmail})} 
-                    value={userInfo.email}
+                    onChangeText={newText => setCredentials({...credentials, email: newText})} 
+                    value={credentials.email}
                     style={[styles.register__input]} 
                     placeholderTextColor={'#555'} 
                     placeholder="Your email here"/>
                 <TextInput 
-                    onChangeText={(newPassword) => setUserInfo({...userInfo, password: newPassword})} 
-                    value={userInfo.password}
+                    onChangeText={newText => setCredentials({...credentials, password: newText})} 
+                    value={credentials.password}
                     style={[styles.register__input]} 
                     placeholderTextColor={'#555'}
                     placeholder="Password" 
                     />
-                {/* <TextInput 
-                    onChangeText={ newVerifyPassword => setVerifyPassword(newVerifyPassword)} 
+                <TextInput 
+                    onChangeText={ newText => setCredentials({...credentials, verifyPassword: newText})} 
                     style={[styles.register__input]} 
                     placeholderTextColor={'#555'}
-                    value={verifyPassword}
+                    value={credentials.verifyPassword}
                     placeholder="Verify your password" 
-                    secureTextEntry/> */}
-                <TouchableOpacity onPress={signUp} style={[styles.register__btnRegister]}>
+                    />
+                <TextInput 
+                    onChangeText={newText=> setCredentials({...credentials, name: newText})}
+                    style={[styles.register__input]} 
+                    placeholderTextColor={'#555'}
+                    value={credentials.name}
+                    placeholder="Your name here" 
+                    />
+                <Text style={{color: '#fff'}}>{credentials.error}</Text>
+                <TouchableOpacity onPress={handleSignUp} style={[styles.register__btnRegister]}>
                     <Text style={styles.register__btnRegisterText}>Sign up</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                    <Text style={[styles.register__btnRegisterText, styles.underline]}>Already have an account? Login</Text>
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
@@ -70,6 +110,9 @@ export default function NavBar() {
 }
 
 const styles = StyleSheet.create({
+    underline: {
+        textDecorationLine: 'underline',
+    },
     register__container:{
         height: "100%",
 

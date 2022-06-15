@@ -1,56 +1,63 @@
 import { StyleSheet, Text, View, SafeAreaView, SectionList, TextInput, Button, TouchableOpacity, FlatList  } from 'react-native';
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import NavBar from './NavBar.js';
 import HorizontalLists from './HorizontalLists.js';
 import ListItem from './ListItem.js';
+import axios from 'axios';
+
 
 const Home = ({ navigation }) => {
-    const Songs = [
-        {
-            title: "Made for you",            
-            data: [
-                {
-                    id: 1,
-                    name: 'meoo11',
-                    imageURL: 'https://dummyimage.com/400x400/ccc/fff',
-                }, 
-                {
-                    id: 2,
-                    name: 'meoo22',
-                    imageURL: 'https://dummyimage.com/400x400/ccc/fff',
-                },
-                {
-                    id: 3,
-                    name: 'meoo22111111111111111111111111111111111111111111111111111',
-                    imageURL: 'https://dummyimage.com/400x400/ccc/fff',
+    const [json, setJson] = useState([])
+    useEffect(() => {
+        console.log('mounted');
+        var axios = require('axios');
+            var data = JSON.stringify({
+            query: `query PlayListCuaToi{
+            myPlayLists {
+                name
+                id
+                imageURL
+                description,
+                author {
+                name
                 }
-            ],          
-            
-        },
-        {
-            title: "Not made for you",            
-            data: [
-                {
-                    id: 1,
-                    name: 'meoo11',
-                    imageURL: 'https://dummyimage.com/400x400/ccc/fff',
-                }, 
-                {
-                    id: 2,
-                    name: 'meoo22',
-                    imageURL: 'https://dummyimage.com/400x400/ccc/fff',
-                },
-                {
-                    id: 3,
-                    name: 'meoo22111111111111111',
-                    imageURL: 'https://dummyimage.com/400x400/ccc/fff',
+                songArr {
+                    name
+                    author
+                    URI
+                    imageURL
+                    title
                 }
-            ]
-        },
-        
-        
-        
-    ];
+            ,
+                
+            }
+            }`,
+            variables: {}
+            });
+
+            var config = {
+            method: 'post',
+            url: 'https://apollo-api-for-musicapp.herokuapp.com/',
+            headers: { 
+                'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTViNDIwYzM1YmM1ZjVhMTEwOWVkYiIsImlhdCI6MTY1NTAyNjcyMCwiZXhwIjoxNjU2MjM2MzIwfQ.eZdzzBDeumUo6kyEV91T5NThCJOKAWeCwhy_Qt8jjKo', 
+                'Content-Type': 'application/json'
+            },
+            data : data
+            };
+
+            async function handleData(){
+                let data = await axios(config);
+                // console.log('res', data.data.data.myPlayLists);
+                let response = data.data.data.myPlayLists
+                for (let i = 0; i < response.length; i++) { // doi property songArr thanh data de render
+                    response[i].data = response[i]['songArr']
+                    delete response[i].songArr;
+                }
+                setJson(response);
+                console.log('res', json);
+            }
+            handleData();
+    }, [])
     const renderItem = ({item}) => {
         return (
                 <ListItem item={item} />
@@ -62,20 +69,20 @@ const Home = ({ navigation }) => {
                 <SectionList
                     contentContainerStyle={{ paddingHorizontal: 16 }}
                     stickySectionHeadersEnabled={false}
-                    sections={Songs}
-                    keyExtractor={item => item.id}
+                    sections={json} // mang chua cac playlist
                     renderItem={({ item, section }) => {
                         return null;
                     }}
-                    renderSectionHeader={({ section, item }) => (
+                    renderSectionHeader={({ section, item }) => ( // mot section la mot playlist
                         <>
-                            <Text style={styles.home__sectionHeader}>{section.title}</Text>
-                                <FlatList
-                                horizontal
-                                data={section.data}
-                                renderItem={renderItem}
-                                showsHorizontalScrollIndicator={false}
-                                />
+                            <Text style={styles.home__sectionHeader}>{section.name}</Text>
+                            <FlatList
+                                    horizontal
+                                    data={section.data} // mang cac bai hat
+                                    renderItem={renderItem}
+                                    keyExtractor={section => section.id}
+                                    showsHorizontalScrollIndicator={false}
+                            />
                         </>
                     )}
                 />
