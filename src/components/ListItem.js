@@ -3,7 +3,7 @@ import React from 'react'
 
 const ListItem = ({item}) => {
     function handleSongPressed(){
-            
+        
     }
     return (
         <TouchableOpacity onPress={handleSongPressed}>
@@ -12,7 +12,7 @@ const ListItem = ({item}) => {
                     style={styles.image}
                     source={{uri: item.imageURL}}
                 />
-                <Text numberOfLines={1} style={styles.text}>{item.name}</Text>   
+                <Text numberOfLines={1} style={styles.text}>{item.name}</Text>
             </View>
         </TouchableOpacity>
         

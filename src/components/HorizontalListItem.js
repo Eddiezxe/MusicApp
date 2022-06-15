@@ -1,30 +1,35 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const PlaylistItem = ({item, navigation}) => {
+const HorizontalListItem = ({item}) => {
+    function handleSongPressed(){
+        
+    }
     return (
-        <TouchableOpacity style={styles.PlayListContainer} onPress={() => navigation.push('PlaylistSong', item)}>
+        <TouchableOpacity style={styles.HorizontalListItem} onPress={handleSongPressed}>
             <View style={styles.imageContainer}>
                 <Image
                     style={styles.image}
                     source={{uri: item.imageURL}}
                 />
                 <View>
-                    <Text numberOfLines={1} style={styles.text}>{item.name}</Text> 
-                    <Text numberOfLines={1} style={styles.description}>{item.description}</Text> 
-                    {/* <Text numberOfLines={1} style={[styles.author]}>by {item.author.name}</Text>  */}
-                </View>
+                    <Text numberOfLines={1} style={styles.songName}>{item.name}</Text>
+                    <Text numberOfLines={1} style={styles.author}>{item.author}</Text>
+                </View>           
             </View>
         </TouchableOpacity>
+        
     )
 }
 
-export default PlaylistItem
+export default HorizontalListItem
 
 const styles = StyleSheet.create({
-    PlayListContainer: {
+    HorizontalListItem: {
         width: "100%",
-        height: "100%",
+        backgroundColor: "#101010",
+        borderBottomWidth: 1,
+        borderBottomColor: '#bbb'
     },
     imageContainer: {
         backgroundColor: '#101010',
@@ -34,18 +39,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     image: {
-        width: 120,
-        height: 120,
-        borderWidth: 1,
+        width: 60,
+        height: 60,
     },
-    text: {
+    songName: {
         color: '#fff',
         fontSize: 18,
         overflow: "hidden",
-        marginTop: 10,
         paddingHorizontal: 16,
         fontWeight: "800"
-    },
+    }, 
     author: {
         color: '#fff',
         fontSize: 12,
@@ -53,12 +56,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         paddingHorizontal: 16,
         fontWeight: "600"
-    },
-    description: {
-        color: '#fff',
-        fontSize: 14,
-        overflow: "hidden",
-        marginTop: 10,
-        paddingHorizontal: 16,
     }
+
 })

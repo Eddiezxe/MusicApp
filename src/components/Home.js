@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, SafeAreaView, SectionList, TextInput, Button, TouchableOpacity, FlatList  } from 'react-native';
 import React, {useEffect, useState} from 'react'
 import NavBar from './NavBar.js';
-import HorizontalLists from './HorizontalLists.js';
 import ListItem from './ListItem.js';
 import axios from 'axios';
 

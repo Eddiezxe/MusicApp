@@ -1,23 +1,31 @@
 import * as React from 'react';
-import { StyleSheet,Text, View, FlatList, SafeAreaView } from 'react-native';
-import PlayList from './PlayList';
+import { StyleSheet,Text, View, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
+import ListItem from './ListItem.js';
+import HorizontalListItem from './HorizontalListItem.js'
 import Icon from 'react-native-vector-icons/AntDesign'; 
-const renderItem = function({item}){
-    return(<PlayList playList = {item}/>);
-} 
-const PlaylistSong = ({navigation}) => {
-    const playListArr = []
+
+const PlaylistSong = ({route, navigation}) => {
+    const renderItem = function({item}){
+        return(<HorizontalListItem item = {item}/>);
+    }
+    console.log(route.params);
+    const playListArr = route.params.songArr;// lay mang cac bai hat
     return (
-        <View style={styles.playlist}>
-            <Icon style={styles.icon} name="arrowleft" size={22} color="#fff"  onPress={() => navigation.navigate('Playlist')}/>
-            <SafeAreaView style={styles.container}>               
-                <FlatList data={playListArr}
-                renderItem ={renderItem}
-                keyExtractor= {(item)=> item.id}
-                showsVerticalScrollIndicator={false}
-                />
-            </SafeAreaView>
-    </View>
+        <TouchableOpacity>
+            <View style={styles.header}>
+                <Icon style={styles.icon} name="arrowleft" size={22} color="#fff"  onPress={() => navigation.navigate('Playlist')}/>
+                <Text style={styles.title} name="">{route.params.name}</Text>
+            </View>
+            <View style={styles.playlist}>
+                <SafeAreaView style={styles.container}>               
+                    <FlatList data={playListArr}
+                    renderItem ={renderItem}
+                    keyExtractor= {(item)=> item.id}
+                    showsVerticalScrollIndicator={false}
+                    />
+                </SafeAreaView>
+            </View>
+        </TouchableOpacity>
     )
 }
 
@@ -27,6 +35,7 @@ const styles = StyleSheet.create({
     playlist: {
         width: '100%',
         height: '100%',
+        marginTop: 70,
     },
     container: {
         flex: 1,
@@ -41,15 +50,24 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
     },
-    separator: {
-        marginVertical: 30,
-        height: 1,
-        width: '80%',
+    header: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 10,
+        flexDirection: 'row',
+        backgroundColor: '#101010',
+        width: '100%',
+        height: 70,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc'
     },
     icon: {
         position: 'absolute',
-        top: 50,
+        top: 24,
         left: 16,
-        zIndex: 10
     }
 })

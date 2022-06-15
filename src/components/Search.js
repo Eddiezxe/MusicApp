@@ -3,10 +3,10 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {useEffect, useState} from 'react';
 import NavBar from './NavBar.js';
 import axios from 'axios';
-import SearchableDropDown from 'react-native-searchable-dropdown';
-import ListItem from './ListItem.js';
+import HorizontalListItem from './HorizontalListItem.js'
+
+
 const Search = ({ navigation }) => {
-    // const [serverData, setServerData] = useState([]);
     const [songName, setSongName] = useState('');
     const [serverData, setServerData] = useState({})
     async function handleSearchSong(){
@@ -35,14 +35,11 @@ const Search = ({ navigation }) => {
 
         let response = await axios(config);
         setServerData(response.data.data.searchSongByName);
-        console.log('-------response from server', response.data.data.searchSongByName[0]);
-        console.log('songName to query', songName);
         //response.data.data.searchSongByName
     }
-    console.log('SonggName', songName);
     const renderItem = ({item}) => {
         return (
-                <ListItem item={item} />
+                <HorizontalListItem item={item} />
         )
     }
     return (
@@ -61,7 +58,7 @@ const Search = ({ navigation }) => {
                     renderItem ={renderItem}
                     keyExtractor= {(item)=> item.id}
                     showsVerticalScrollIndicator={false}/>  
-                </View>
+            </View>
             <NavBar navigation={navigation}/>
         </View>
     )
@@ -77,7 +74,7 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-start",
-        backgroundColor: "black",
+        backgroundColor: "#101010",
         height: "100%",
         width: "100%"
     },
@@ -109,6 +106,12 @@ const styles = StyleSheet.create({
         width: "90%",
         paddingVertical: 0,
         color: "#000"
+    }, 
+    listItem: {
+        marginTop: 12,
+        marginLeft: 32,
+        width: "100%",
+        height: "100%",
     }
 
 })

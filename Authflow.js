@@ -21,10 +21,10 @@ export default function Authflow() {
             userInfo ?  (
                 <NavigationContainer>
                         <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
-                            <Stack.Screen name="Home" component={Home} />
-                            <Stack.Screen name="Search" component={Search} />
-                            <Stack.Screen name="Playlist" component={PlayListScreen} />
-                            <Stack.Screen name="PlaylistSong" component={PlaylistSong} />
+                            <Stack.Screen name="Home" component={Home}/>
+                            <Stack.Screen name="Search" component={Search}/>
+                            <Stack.Screen name="Playlist" component={PlayListScreen}/>
+                            <Stack.Screen name="PlaylistSong" component={PlaylistSong}/>
                         </Stack.Navigator>
                 </NavigationContainer>) : (
                 <NavigationContainer>
@@ -41,9 +41,4 @@ export default function Authflow() {
 
 }
 
-const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-        height: '100%',
-    }
-})
+

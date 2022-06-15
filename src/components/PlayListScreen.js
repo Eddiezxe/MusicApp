@@ -6,13 +6,10 @@ import axios from 'axios';
 import PlaylistItem from './PlaylistItem.js';
 
 
- 
-
 export default function PlayListScreen({navigation}) {
   const [json, setJson] = useState({});
   // lay data sau khi mount component
   useEffect(() => {
-    console.log('mounted');
     var axios = require('axios');
         var data = JSON.stringify({
         query: `query PlayListCuaToi{
@@ -49,21 +46,23 @@ export default function PlayListScreen({navigation}) {
 
         async function handleData(){
           let jsonGetFromServer = await axios(config);
-          console.log(jsonGetFromServer.data.data);
+          // console.log('---------------\n',jsonGetFromServer.data.data);
           setJson(jsonGetFromServer.data.data);
         }
         handleData();
 }, [])
+
 const renderItem = function({item}){
-  return(<PlaylistItem item = {item}/>);
+  return(<PlaylistItem item={item} navigation={navigation}/>);
 }
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Your Playlist</Text>
       <SafeAreaView style={{ flex: 1 }}>
           <FlatList data={json.myPlayLists}
           renderItem ={renderItem}
           keyExtractor= {(item)=> item.id}
-          showsVerticalScrollIndicator={false}/>      
+          showsVerticalScrollIndicator={false}/>  
       </SafeAreaView>
       <NavBar navigation={navigation}/>
     </View>
@@ -73,20 +72,14 @@ const renderItem = function({item}){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // width: '100%',
-    // height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#101010'
-  },
+    backgroundColor: '#101010',
+    paddingTop: 30
+  }, 
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: 'white',
+  }
 });
