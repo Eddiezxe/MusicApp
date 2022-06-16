@@ -8,19 +8,21 @@ import Search from './src/components/Search.js'
 import Register from './src/components/Register.js'
 import Home from './src/components/Home.js';
 import PlaylistSong from './src/components/PlaylistSong.js'
-import UserInfoContext from './src/reducer/UserInfoProvider.js'
+import {useGlobalState} from './src/reducer/UserInfoProvider.js'
 
 
 
 const Stack = createNativeStackNavigator();
+
 export default function Authflow() {
-    // const [userInfo, dispatch] = useContext(UserInfoContext);
-    // console.log(userInfo);
-    const userInfo = true;
+    const [{user, token}, dispatcher] = useGlobalState();
+    useEffect(() => {
+
+    }, [])
     return(
-            userInfo ?  (
+        token ?  (
                 <NavigationContainer>
-                        <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
+                        <Stack.Navigator  initialRouteName="Home" screenOptions={{headerShown: false}}>
                             <Stack.Screen name="Home" component={Home}/>
                             <Stack.Screen name="Search" component={Search}/>
                             <Stack.Screen name="Playlist" component={PlayListScreen}/>

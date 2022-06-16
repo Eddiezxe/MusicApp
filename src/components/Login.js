@@ -2,6 +2,8 @@ import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity  } from 're
 import {useEffect, useState, useContext} from 'react';
 import {UserInfoContext} from '../reducer/UserInfoProvider'
 import axios from 'axios';
+import {useGlobalState} from '../reducer/UserInfoProvider.js'
+
 
 function Login( props) {
     const [credentials, setCredentials] = useState({
@@ -9,7 +11,8 @@ function Login( props) {
         password: '',
         error: '',
     })
-    console.log(credentials);
+    const [{token}, dispatch] = useGlobalState();
+    // console.log(credentials);
     async function handleLogin(){
         if(credentials.email && credentials.password)
         {
@@ -46,6 +49,10 @@ function Login( props) {
             //if there is no error
             if(!response.data.errors)
             {
+                dispatch({
+                    type: 'SET_TOKEN',
+                    token: response.data.data.signIn.token,
+                })
                 // sendToken(response.data.data.signIn.token)
             }
             else

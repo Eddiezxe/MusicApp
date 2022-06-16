@@ -1,16 +1,16 @@
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity  } from 'react-native';
 import React, {useEffect, useState, useContext} from 'react';
-// import {Context} from './src/reducer/Context.js';
+
+import reducer, {initialState} from './src/reducer/reducer.js'
 import UserInfoProvider from './src/reducer/UserInfoProvider.js';
 import Authflow from './Authflow.js'
 
 export default function App() {
 
   return(
-        <UserInfoProvider>
+        <UserInfoProvider reducer={reducer} initialState={initialState}>
             <Authflow/>
         </UserInfoProvider>
-      
   )
   
 }
