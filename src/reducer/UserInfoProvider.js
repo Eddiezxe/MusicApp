@@ -12,4 +12,3 @@ const UserInfoProvider = ({reducer, initialState, children}) => (
 
 export const useGlobalState = () => useContext(UserInfoContext);
 export default UserInfoProvider  ;
-    

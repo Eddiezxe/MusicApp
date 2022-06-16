@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react'
 import NavBar from './NavBar.js';
 import ListItem from './ListItem.js';
 import axios from 'axios';
+import Icon from 'react-native-vector-icons/Ionicons'; 
 
 
 const Home = ({ navigation }) => {
@@ -64,7 +65,13 @@ const Home = ({ navigation }) => {
     }
     return (
         <View style={styles.home}>
+            
             <SafeAreaView style={{ flex: 1 }}>
+                <View style={styles.setting__section}>
+                    <TouchableOpacity style={[styles.setting__button]} onPress={() => navigation.navigate('UserSetting')}>
+                        <Icon style={styles.icon} name="ios-settings-outline" size={22} color="#fff"/>
+                    </TouchableOpacity>
+                </View>
                 <SectionList
                     contentContainerStyle={{ paddingHorizontal: 16 }}
                     stickySectionHeadersEnabled={false}
@@ -109,6 +116,19 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 18,
         fontWeight: "bold",
+    },
+    setting__button:{
+        backgroundColor: '#101010',
+        width: 32,
+        height: 32,
+        alignItems: "center",
+        justifyContent: "center",
+        right: 38
+    },
+    setting__section:{
+        backgroundColor: '#101010',
+        flexDirection: 'row',
+        justifyContent: "flex-end",
     }
 
 })

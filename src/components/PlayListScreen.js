@@ -1,5 +1,4 @@
 import { StyleSheet,Text, View, FlatList, SafeAreaView } from 'react-native';
-import PlayList from './PlayList';
 import NavBar from './NavBar.js';
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';

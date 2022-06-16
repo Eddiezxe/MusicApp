@@ -45,15 +45,18 @@ function Login( props) {
                 
             const response = await axios(config)
 
-            console.log(response);
+            console.log(response.data.data.signIn);
             //if there is no error
             if(!response.data.errors)
             {
-                dispatch({
+                dispatch({ // gui token den global state
                     type: 'SET_TOKEN',
                     token: response.data.data.signIn.token,
                 })
-                // sendToken(response.data.data.signIn.token)
+                dispatch({ // gui user 
+                    type: 'SET_USER',
+                    user: response.data.data.signIn
+                })
             }
             else
                 setCredentials({...credentials, error: response.data.errors[0].message})

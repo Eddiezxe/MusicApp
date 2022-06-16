@@ -9,17 +9,15 @@ import Register from './src/components/Register.js'
 import Home from './src/components/Home.js';
 import PlaylistSong from './src/components/PlaylistSong.js'
 import {useGlobalState} from './src/reducer/UserInfoProvider.js'
-
+import UserSetting from './src/components/UserSetting.js';
 
 
 const Stack = createNativeStackNavigator();
 
 export default function Authflow() {
-    const [{user, token}, dispatcher] = useGlobalState();
-    useEffect(() => {
-
-    }, [])
+    const [{token}, dispatcher] = useGlobalState();
     return(
+        // <UserSetting/>
         token ?  (
                 <NavigationContainer>
                         <Stack.Navigator  initialRouteName="Home" screenOptions={{headerShown: false}}>
@@ -27,6 +25,7 @@ export default function Authflow() {
                             <Stack.Screen name="Search" component={Search}/>
                             <Stack.Screen name="Playlist" component={PlayListScreen}/>
                             <Stack.Screen name="PlaylistSong" component={PlaylistSong}/>
+                            <Stack.Screen name="UserSetting" component={UserSetting}/>
                         </Stack.Navigator>
                 </NavigationContainer>) : (
                 <NavigationContainer>
